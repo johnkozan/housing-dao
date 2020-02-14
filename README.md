@@ -8,3 +8,5 @@ Still to do:
 Talk to DAOstack about functionality
 Ask Ven about testnet and local deployments of moloch
 
+Resources: 
+https://alchemy.daostack.io/daos/create
