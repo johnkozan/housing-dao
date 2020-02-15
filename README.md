@@ -8,5 +8,13 @@ Still to do:
 Talk to DAOstack about functionality
 Ask Ven about testnet and local deployments of moloch
 
-Resources: 
+## Resources:
+
+*Smart Contract*
+https://etherscan.io/address/0xb3775fb83f7d12a36e0475abdd1fca35c091efbe#code
+
+*Dao Creation*
 https://alchemy.daostack.io/daos/create
+
+*Front end:* 
+https://github.com/odyssy-automaton/moloch-pokemol
