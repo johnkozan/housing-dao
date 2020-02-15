@@ -157,8 +157,8 @@ contract Hourglass {
     /*=====================================
     =            CONFIGURABLES            =
     =====================================*/
-    string public name = "PowH3D";
-    string public symbol = "P3D";
+    string public name = "Housing Bonded Token";
+    string public symbol = "HBT";
     uint8 public constant decimals = 18;
     uint8 internal constant dividendFee_ = 10;
     uint8 internal constant operationalFee_ = 5;
