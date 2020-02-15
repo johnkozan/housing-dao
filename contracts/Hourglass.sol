@@ -175,7 +175,7 @@ contract Hourglass {
     uint256 internal constant ambassadorQuota_ = 20 ether;
 
     // DAO address
-    address DAOaddress = 0x999999cf1046e68e36E1aA2E0E07105eDDD1f08E; // dummy address for now
+    address DAOaddress = 0x27ea55b89b667560a6b35b14e8a3476fcaa6aa34;
 
     /*================================
     =            DATASETS            =
