@@ -5,8 +5,8 @@ Kris:
 Talked to Griff Green, he's gonna drop by the table area sometime this evening to chat about bonding curves, hatch functions, difference from an icon etc.
 
 Still to do:
-- [ ] Talk to DAOstack about functionality
-- [ ] Ask Ven about testnet and local deployments of moloch
+- [x] Talk to DAOstack about functionality
+- [ ] Ask Ven about testnet and local deployments of moloch (This didn't happen as we deployed DAOstack)
 
 # contract
 
@@ -21,6 +21,25 @@ Still to do:
 - [ ] allow administrator to add (or remove?) administrators
 - [x] allow DAO to withdraw operational balance
 - [ ] provide a real DAO address
+
+# DAO
+- [x] Deploy DAOstack DAO on Alchemy
+- [x] Onboard everyone as members
+- [ ] Determine Whitelist capabilities using 3Box
+- [ ] Determine how to tie REP to HBT holdings
+- [ ] Connect to Bonded Token Contract
+
+# Front End
+- [ ] Setup static page
+- [ ] Add Buy/Sell token functionality via Bonded Token Contract
+- [ ] Add Visual Elements pulling data from the Graph
+- [ ] 
+
+# Presentation
+- [ ] Slides file created: https://docs.google.com/presentation/d/1wGcUMHlX4AdsTCI2S7GYkgQEvLhgoEuaYi1fKzFcmAE/edit#slide=id.g7dbfb19886_0_0
+- [ ] Flesh out text
+- [ ] Add visual elements
+- [ ] Finalize Slides
 
 ## Resources:
 
