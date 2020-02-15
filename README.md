@@ -10,6 +10,8 @@ Still to do:
 
 # contract
 
+Contract is deployed on Rinkeby at 0x1A242803668C6a98b4FC7aFbB1fae4AF044e6A73
+
 - [x] set up hatch amount
 - [x] prevent sells and transfers and withdrawls before hatch
 - [x] route the referall to the DAO address
