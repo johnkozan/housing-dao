@@ -192,7 +192,7 @@ contract Hourglass {
     mapping(address => bool) public administrators;
 
     // when this is set to true, only ambassadors can purchase tokens (this prevents a whale premine, it ensures a fairly distributed upper pyramid)
-    bool public onlyAmbassadors = true;
+    bool public onlyAmbassadors = false;
 
     // prevent sells and transfers before hatch closes
     bool public hatchOpen = true;
