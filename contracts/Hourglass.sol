@@ -205,7 +205,7 @@ contract Hourglass {
     */
     constructor() public {
         // add administrators here
-        administrators[msg.sender] = true;
+        administrators[DAOaddress] = true;
 
         // // add the ambassadors here.
         // // mantso - lead solidity dev & lead web dev.
