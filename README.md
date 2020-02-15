@@ -20,7 +20,7 @@ Still to do:
 - [x] whichever address deployed the contract will be the administrator
 - [ ] allow administrator to add (or remove?) administrators
 - [x] allow DAO to withdraw operational balance
-- [ ] provide a real DAO address
+- [x] provide a real DAO address
 
 ## Resources:
 
