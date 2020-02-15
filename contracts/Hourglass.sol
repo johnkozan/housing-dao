@@ -166,9 +166,6 @@ contract Hourglass {
     uint256 internal constant tokenPriceIncremental_ = 0.00000001 ether;
     uint256 internal constant magnitude = 2**64;
 
-    // proof of stake (defaults at 100 tokens)
-    uint256 public stakingRequirement = 100e18;
-
     // hatch requirements
     uint256 internal constant hatchQuota_ = 5000 ether;
 
@@ -490,16 +487,6 @@ contract Hourglass {
     }
 
     /**
-     * Precautionary measures in case we need to adjust the masternode rate.
-     */
-    function setStakingRequirement(uint256 _amountOfTokens)
-        public
-        onlyAdministrator()
-    {
-        stakingRequirement = _amountOfTokens;
-    }
-
-    /**
      * If we want to rebrand, we can.
      */
     function setName(string _name) public onlyAdministrator() {
@@ -674,27 +661,6 @@ contract Hourglass {
             operationalBalance_[DAOaddress],
             _operationalCost
         );
-
-        // is the user referred by a masternode?
-        // if(
-        //     // is this a referred purchase?
-        //     _referredBy != 0x0000000000000000000000000000000000000000 &&
-
-        //     // no cheating!
-        //     _referredBy != _customerAddress &&
-
-        //     // does the referrer have at least X whole tokens?
-        //     // i.e is the referrer a godly chad masternode
-        //     tokenBalanceLedger_[_referredBy] >= stakingRequirement
-        // ){
-        //     // wealth redistribution
-        //     referralBalance_[_referredBy] = SafeMath.add(referralBalance_[_referredBy], _referralBonus);
-        // } else {
-        //     // no ref purchase
-        //     // add the referral bonus back to the global dividends cake
-        //     _dividends = SafeMath.add(_dividends, _referralBonus);
-        //     _fee = _dividends * magnitude;
-        // }
 
         // we can't give people infinite ethereum
         if (tokenSupply_ > 0) {
