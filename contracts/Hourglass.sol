@@ -185,7 +185,6 @@ contract Hourglass {
     ================================*/
     // amount of shares for each address (scaled number)
     mapping(address => uint256) internal tokenBalanceLedger_;
-    // mapping(address => uint256) internal referralBalance_;
     mapping(address => uint256) internal operationalBalance_;
     mapping(address => int256) internal payoutsTo_;
     mapping(address => uint256) internal ambassadorAccumulatedQuota_;
