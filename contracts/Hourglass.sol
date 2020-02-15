@@ -2,17 +2,6 @@
  *Submitted for verification at Etherscan.io on 2018-02-25
 */
 
-// DONE: set up hatch amount
-// DONE: prevent sells and transfers and withdrawls before hatch
-// DONE: route the referall to the DAO address
-// DONE: take operation cut for sells
-// DONE: take operational cut for transfers
-// TODO: reuse ambassadorQuota_ for whitelisted addresses (3Box)
-// DONE: prevent selling and transferring of tokens before hatch
-// DONE: whichever address deployed the contract will be the administrator
-// TODO: allow administrator to add (or remove?) administrators
-// DONE: allow DAO to withdraw operational balance
-
 pragma solidity ^0.4.20;
 
 /*
