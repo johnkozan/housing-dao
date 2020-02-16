@@ -10,7 +10,7 @@ Still to do:
 
 # contract
 
-Contract is deployed on Rinkeby at 0x12FC7882Fb52c73fCa405a08A3E9a681761D1fDD
+Contract is deployed on Rinkeby at 0xc424431c848b7B70a7da291a51FffD67F229f29a
 
 - [x] set up hatch amount
 - [x] prevent sells and transfers and withdrawls before hatch
@@ -32,10 +32,10 @@ Contract is deployed on Rinkeby at 0x12FC7882Fb52c73fCa405a08A3E9a681761D1fDD
 - [ ] Connect to Bonded Token Contract
 
 # Front End
-- [ ] Setup static page
-- [ ] Add Buy/Sell token functionality via Bonded Token Contract
+- [ ] ~~Setup static page~~
+- [x] Add Buy/Sell token functionality via Bonded Token Contract
 - [ ] Add Visual Elements pulling data from the Graph
-- [ ] 
+- [ ] Add additional description text
 
 # Presentation
 - [ ] Slides file created: https://docs.google.com/presentation/d/1wGcUMHlX4AdsTCI2S7GYkgQEvLhgoEuaYi1fKzFcmAE/edit#slide=id.g7dbfb19886_0_0
