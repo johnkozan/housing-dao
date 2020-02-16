@@ -3,6 +3,7 @@ import { addresses, abis } from '@project/contracts';
 //import { gql } from 'apollo-boost';
 //import { useQuery } from '@apollo/react-hooks';
 import { ethers } from 'ethers';
+import { Curve } from './Curve';
 import './App.css';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -345,6 +346,13 @@ function App() {
           </Card>
         </Grid>
 
+      </Grid>
+
+
+      <Grid container>
+        <Grid item xs={12}>
+          <Curve contract={contract} />
+        </Grid>
       </Grid>
 
 
