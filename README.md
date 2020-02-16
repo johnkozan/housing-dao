@@ -10,7 +10,7 @@ Still to do:
 
 # contract
 
-Contract is deployed on Rinkeby at 0x12FC7882Fb52c73fCa405a08A3E9a681761D1fDD
+Contract is deployed on Rinkeby at 0xce98de6CDBebbD204Ed16B913b1B4aC1aabdc710
 
 - [x] set up hatch amount
 - [x] prevent sells and transfers and withdrawls before hatch
