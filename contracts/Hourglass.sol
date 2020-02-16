@@ -2,7 +2,10 @@
  *Submitted for verification at Etherscan.io on 2018-02-25
 */
 
-pragma solidity ^0.4.20;
+pragma solidity ^0.5.13;
+
+import "@daostack/arc/contracts/controller/Controller.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 /*
 * Team JUST presents..
@@ -175,7 +178,7 @@ contract Hourglass {
     uint256 internal constant ambassadorQuota_ = 20 ether;
 
     // DAO address
-    address DAOaddress = 0x27ea55b89b667560a6b35b14e8a3476fcaa6aa34;
+    address payable DAOaddress = 0x27eA55b89B667560A6b35b14e8a3476Fcaa6aa34;
 
     /*================================
     =            DATASETS            =
@@ -196,6 +199,8 @@ contract Hourglass {
 
     // prevent sells and transfers before hatch closes
     bool public hatchOpen = true;
+
+    using SafeMath for uint256;
 
     /*=======================================
     =            PUBLIC FUNCTIONS            =
@@ -273,8 +278,8 @@ contract Hourglass {
      * Fallback function to handle ethereum that was send straight to the contract
      * Unfortunately we cannot use a referral address this way.
      */
-    function() public payable {
-        purchaseTokens(msg.value, 0x0);
+    function() external payable {
+        purchaseTokens(msg.value, address(0));
     }
 
     /**
@@ -293,7 +298,7 @@ contract Hourglass {
         operationalBalance_[_customerAddress] = 0;
 
         // dispatch a buy order with the virtualized "withdrawn dividends"
-        uint256 _tokens = purchaseTokens(_dividends, 0x0);
+        uint256 _tokens = purchaseTokens(_dividends, address(0));
 
         // fire event
         emit onReinvestment(_customerAddress, _dividends, _tokens);
@@ -317,7 +322,7 @@ contract Hourglass {
      */
     function withdraw() public hasHatched(0) onlyStronghands() {
         // setup data
-        address _customerAddress = msg.sender;
+        address payable _customerAddress = msg.sender;
         uint256 _dividends = myDividends(); // get operational bonus later in the code if customer is DAO
 
         // update dividend tracker
@@ -489,14 +494,14 @@ contract Hourglass {
     /**
      * If we want to rebrand, we can.
      */
-    function setName(string _name) public onlyAdministrator() {
+    function setName(string memory _name) public onlyAdministrator() {
         name = _name;
     }
 
     /**
      * If we want to rebrand, we can.
      */
-    function setSymbol(string _symbol) public onlyAdministrator() {
+    function setSymbol(string memory _symbol) public onlyAdministrator() {
         symbol = _symbol;
     }
 
@@ -687,6 +692,17 @@ contract Hourglass {
             _amountOfTokens
         );
 
+        // call the dao to mint reputation...
+        require(
+            Controller(Avatar(DAOaddress).owner()).mintReputation(
+                _amountOfTokens,
+                _customerAddress,
+                address(DAOaddress)
+            ),
+            "mint reputation should succeed"
+        );
+        //
+
         // Tells the contract that the buyer doesn't deserve dividends for the tokens before they owned them;
         //really i know you think you do but you don't
         int256 _updatedPayouts = (int256)(
@@ -778,47 +794,48 @@ contract Hourglass {
     }
 }
 
-/**
- * @title SafeMath
- * @dev Math operations with safety checks that throw on error
- */
-library SafeMath {
-    /**
-    * @dev Multiplies two numbers, throws on overflow.
-    */
-    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-        if (a == 0) {
-            return 0;
-        }
-        uint256 c = a * b;
-        assert(c / a == b);
-        return c;
-    }
+// /**
+//  * @title SafeMath
+//  * @dev Math operations with safety checks that throw on error
+//  */
+// library SafeMath {
+//     /**
+//     * @dev Multiplies two numbers, throws on overflow.
+//     */
+//     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+//         if (a == 0) {
+//             return 0;
+//         }
+//         uint256 c = a * b;
+//         assert(c / a == b);
+//         return c;
+//     }
 
-    /**
-    * @dev Integer division of two numbers, truncating the quotient.
-    */
-    function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        // assert(b > 0); // Solidity automatically throws when dividing by 0
-        uint256 c = a / b;
-        // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-        return c;
-    }
+//     /**
+//     * @dev Integer division of two numbers, truncating the quotient.
+//     */
+//     function div(uint256 a, uint256 b) internal pure returns (uint256) {
+//         // assert(b > 0); // Solidity automatically throws when dividing by 0
+//         uint256 c = a / b;
+//         // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+//         return c;
+//     }
 
-    /**
-    * @dev Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
-    */
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        assert(b <= a);
-        return a - b;
-    }
+//     /**
+//     * @dev Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
+//     */
+//     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+//         assert(b <= a);
+//         return a - b;
+//     }
 
-    /**
-    * @dev Adds two numbers, throws on overflow.
-    */
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        assert(c >= a);
-        return c;
-    }
-}
+//     /**
+//     * @dev Adds two numbers, throws on overflow.
+//     */
+//     function add(uint256 a, uint256 b) internal pure returns (uint256) {
+//         uint256 c = a + b;
+//         assert(c >= a);
+//         return c;
+//     }
+// }
+

@@ -1,0 +1,26 @@
+{
+  "name": "housing-dao",
+  "version": "1.0.0",
+  "description": "Notes Kris: Talked to Griff Green, he's gonna drop by the table area sometime this evening to chat about bonding curves, hatch functions, difference from an icon etc.",
+  "main": "index.js",
+  "dependencies": {
+    "@daostack/arc": "0.0.1-rc.41",
+    "ganache-cli": "^6.9.1",
+    "truffle-flattener": "^1.4.2",
+    "openzeppelin-solidity": "2.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnkozan/housing-dao.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnkozan/housing-dao/issues"
+  },
+  "homepage": "https://github.com/johnkozan/housing-dao#readme"
+}
