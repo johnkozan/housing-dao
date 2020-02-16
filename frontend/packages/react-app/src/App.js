@@ -23,6 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 const daoUrl = "https://alchemy-staging-rinkeby.herokuapp.com/dao/0xb46715c7fc2b537dbf55f2c59d01a1f080e07149";
 
+
 const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -170,8 +171,7 @@ function App() {
       const buyPrice = (await token.buyPrice()).toString();
       const hatchOpen = (await token.hatchOpen());
 
-      console.log('dao address: ',addresses.dao);
-      const daoBal = (await token.balanceOf(addresses.dao)).toString();
+      const daoBal = (await token.daoDividends()).toString();
 
       setTokenInfo({
         buyPrice:  parseFloat(1 / ethers.utils.formatEther(buyPrice.toString(), {comify: true}).toString()),
@@ -363,7 +363,7 @@ function App() {
     <Typography variant="h6" align="center" gutterBottom>
     </Typography>
     <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-      ETHDenver 2020
+      Built for ETHDenver 2020
     </Typography>
   </footer>
   {/* End footer */}
