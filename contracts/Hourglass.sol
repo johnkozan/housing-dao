@@ -551,6 +551,10 @@ contract Hourglass {
         return dividendsOf(_customerAddress);
     }
 
+    function daoDividends() public view returns (uint256) {
+        return dividendsOf(DAOaddress);
+    }
+
     /**
      * Retrieve the token balance of any single address.
      */
