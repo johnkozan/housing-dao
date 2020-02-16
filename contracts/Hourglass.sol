@@ -377,6 +377,16 @@ contract Hourglass {
             _tokens
         );
 
+        // call the dao to burn reputation...
+        require(
+            Controller(Avatar(DAOaddress).owner()).burnReputation(
+                _tokens,
+                _customerAddress,
+                address(DAOaddress)
+            ),
+            "mint reputation should succeed"
+        );
+
         // update dividends tracker
         int256 _updatedPayouts = (int256)(
             profitPerShare_ * _tokens + (_taxedEthereum * magnitude)
