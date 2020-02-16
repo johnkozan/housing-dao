@@ -18,7 +18,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
+
+const daoUrl = "https://alchemy-staging-rinkeby.herokuapp.com/dao/0xb46715c7fc2b537dbf55f2c59d01a1f080e07149";
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -50,24 +52,17 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  hatchOpen: {
+    color: 'orange',
+  },
 }));
 
 
 const overrides = {
-  gasLimit: 23000,
+  gasLimit: 1123000,
   gasPrice: ethers.utils.parseUnits('9.0', 'gwei'),
 };
 
-//const GET_TRANSFERS = gql`
-//{
-//transfers (first: 10) {
-//id
-//from
-//to
-//value
-//}
-//}
-//`;
 
 function App() {
   const classes = useStyles();
@@ -83,22 +78,53 @@ function App() {
     daoBalance: '',
   });
 
+  const [buyPrice, setBuyPrice] = useState('');
+  const [sellPrice, setSellPrice] = useState('');
 
   const [values, setValues] = useState({buy: '', sell: ''});
   const [prov, setProv] = useState({provider: undefined, signer: undefined});
   const [txHash, setTxHash] = useState(undefined);
+
+  const updateBuyPriceFor = async (eth) => {
+    try {
+      const ethAmt = ethers.utils.parseEther(eth);
+      const buyPrice = await contract.calculateTokensReceived(ethAmt);
+      setBuyPrice(ethers.utils.formatEther(buyPrice, 18).toString());
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  };
+  const updateSellPriceFor = async (eth) => {
+    try {
+      const ethAmt = ethers.utils.parseEther(eth);
+      const sellPrice = await contract.calculateEthereumReceived(ethAmt);
+      setSellPrice(ethers.utils.formatEther(sellPrice, 18).toString());
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  };
 
   const handleChange = (event) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
+
+    if (event.target.value === '' || event.target.value == '0') { return; }
+    if (event.target.name === 'buy') {
+      setBuyPrice('');
+      updateBuyPriceFor(event.target.value);
+    }
+    if (event.target.name === 'sell') {
+      setSellPrice('');
+      updateSellPriceFor(event.target.value);
+    }
+
   };
 
   const handleBuy = async () => {
-    console.log('Buying ', values.buy);
-    let gasLimit = 21000;
-
     const params = [{
       from: prov.signer._address,
       to: addresses.token,
@@ -110,19 +136,16 @@ function App() {
   };
 
   const handleWithdraw = async () => {
-    console.log('Selling ', values.sell);
     const transactionHash = await contract.withdraw(overrides);
     setTxHash(transactionHash.hash);
   };
 
   const handleReinvest = async () => {
-
     const transactionHash = await contract.reinvest(overrides);
     setTxHash(transactionHash.hash);
   };
 
   const handleSell = async () => {
-    console.log('Withdrawing ', values.sell);
     const transactionHash = await contract.sell(ethers.utils.parseUnits(values.sell, 18).toHexString());
     setTxHash(transactionHash.hash);
   };
@@ -144,6 +167,7 @@ function App() {
       const myDivs = (await token.myDividends()).toString();
       const sellPrice = (await token.sellPrice()).toString();
       const buyPrice = (await token.buyPrice()).toString();
+      const hatchOpen = (await token.hatchOpen());
 
       console.log('dao address: ',addresses.dao);
       const daoBal = (await token.balanceOf(addresses.dao)).toString();
@@ -155,6 +179,7 @@ function App() {
         myBalance: ethers.utils.formatEther(myBal, {comify: true}),
         daoBalance: ethers.utils.formatEther(daoBal, {comify: true}),
         myDividends: ethers.utils.formatEther(myDivs, {comify: true}),
+        hatchOpen,
       });
 
     })();
@@ -183,7 +208,7 @@ function App() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" component="a" href={daoUrl} target="_blank">
                     DAO Managment
                   </Button>
                 </Grid>
@@ -239,7 +264,7 @@ function App() {
                     Buy Token
                   </Typography>
                   <Typography>
-                    Buy price: { tokenInfo.buyPrice } tokens / ETH
+                    { values.buy } ETH = { buyPrice } tokens
                   </Typography>
 
                   <TextField
@@ -273,12 +298,18 @@ function App() {
                   My dividend balance: { tokenInfo.myDividends }
                 </Typography>
 
+                { tokenInfo.hatchOpen ? (
+                  <Typography className={classes.hatchOpen}>
+                    Dividend withdraws are disabled during the initial token hatch period.
+                  </Typography>
+                ) : undefined }
+
               </CardContent>
               <CardActions>
-                <Button size="small" color="primary" onClick={handleWithdraw}>
+                <Button size="small" color="primary" onClick={handleWithdraw} disabled={tokenInfo.hatchOpen}>
                   Withdraw
                 </Button>
-                <Button size="small" color="primary" onClick={handleReinvest}>
+                <Button size="small" color="primary" onClick={handleReinvest} disabled={tokenInfo.hatchOpen}>
                   Reinvest
                 </Button>
               </CardActions>
@@ -292,7 +323,7 @@ function App() {
                   Sell Token
                 </Typography>
                 <Typography>
-                  Sell Price: { tokenInfo.sellPrice } ETH / token
+                  { values.sell } Tokens = { sellPrice } ETH
                 </Typography>
 
                 <TextField
